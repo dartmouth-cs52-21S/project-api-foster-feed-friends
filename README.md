@@ -8,18 +8,24 @@ TODO: short project description, some sample screenshots or mockups
 ## Architecture
 
 TODO:  descriptions of code organization and tools and libraries used
+- mongodb
+- passport for security
+- bycrypt for password encryption
 
 ## Setup
 
 TODO: how to get the project dev environment up and running, npm install etc
+- npm start
 
 ## Deployment
 
 TODO: how to deploy the project
+- heroku
 
 ## Authors
 
 TODO: list of authors
+- Juliet Elisa Giraso
 
 ## Acknowledgments
 # starter express app template
