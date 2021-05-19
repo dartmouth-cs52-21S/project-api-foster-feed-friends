@@ -20,12 +20,13 @@ TODO: how to get the project dev environment up and running, npm install etc
 ## Deployment
 
 TODO: how to deploy the project
-- heroku
+- heroku for this api check out this link 
 
 ## Authors
 
 TODO: list of authors
 - Juliet Elisa Giraso
+- William Perez
 
 ## Acknowledgments
 # starter express app template
@@ -34,4 +35,4 @@ TODO: list of authors
 * expressjs
 * airbnb eslint rules
 
-Procfile set up to run on [heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs#deploy-the-app)
+Procfile set up to run on [heroku](https://foster-project.herokuapp.com/api)
