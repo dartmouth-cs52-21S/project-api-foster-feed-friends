@@ -3,9 +3,9 @@ import Mentor from '../models/mentor_model';
 export const getMentors = async () => {
   try {
     // await finding paths
-    const Mentors = await Mentor.find({});
+    const mentors = await Mentor.find({});
     // return paths
-    return Mentors;
+    return mentors;
   } catch (error) {
     throw new Error(`get mentors error: ${error}`);
   }
@@ -20,5 +20,22 @@ export const getMentor = async (id) => {
     return mentor;
   } catch (error) {
     throw new Error(`get mentor error: ${error}`);
+  }
+};
+
+export const createMentor = async (fields) => {
+  // await creating a path
+  const mentor = new Mentor();
+  mentor.fullName = fields.fullName;
+  mentor.hometown = fields.hometown;
+  mentor.bio = fields.bio;
+  console.log(mentor);
+  // return path
+  try {
+    // await creating a path
+    const savedmentor = await mentor.save();
+    return savedmentor;
+  } catch (error) {
+    throw new Error(`create mentor error: ${error}`);
   }
 };

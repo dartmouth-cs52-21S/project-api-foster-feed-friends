@@ -1,4 +1,4 @@
-import passport from 'passport';
+import { Passport } from 'passport';
 import LocalStrategy from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import dotenv from 'dotenv';
@@ -10,7 +10,7 @@ dotenv.config({ silent: true });
 // options for local strategy, we'll use email AS the username
 // not have separate ones
 const localOptions = { usernameField: 'email' };
-
+const passport = new Passport();
 // options for jwt strategy
 // we'll pass in the jwt in an `authorization` header
 // so passport can find it there
@@ -30,14 +30,18 @@ const localLogin = new LocalStrategy(localOptions, async (email, password, done)
     org = await Organisation.findOne({ email });
     isMatch = await org.comparePassword(password);
   } catch (error) {
+    console.log('hello');
     return done(error);
   }
 
   if (!org) {
+    // no org with the email
     return done(null, false);
   } else if (!isMatch) {
+    // there is an org but the input password is not a match
     return done(null, false);
   } else {
+    // else there is a match for both email and password
     return done(null, org);
   }
 });
@@ -46,13 +50,17 @@ const jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
   // is called with confirmed jwt we just need to confirm that org exits
   let org;
   try {
+    // verify the token and find the corresponding user
     org = await Organisation.findById(payload.sub);
   } catch (error) {
+    // in case of error
     done(error, false);
   }
   if (org) {
+    // if there is a match
     done(null, org);
   } else {
+    // if there is no match for the token
     done(null, false);
   }
 });

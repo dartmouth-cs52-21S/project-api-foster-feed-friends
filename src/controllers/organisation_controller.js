@@ -15,7 +15,7 @@ export const signin = (organisation) => {
 
 // note the lovely destructuring here indicating that we are passing in an object with these 3 keys
 export const signup = async ({
-  email, password, fullName, location, bio, purpose, donationRoute,
+  email, password, fullName, location, purpose, donationRoute,
 }) => {
   if (!email || !password) {
     throw new Error('You must provide email and password');
@@ -40,9 +40,8 @@ export const signup = async ({
   // this is similar to how you created a Post
   // and then save and return a token
   await org.save();
-
-  // verify this part for the id???
-  return { token: tokenForOrganisation(org), id: org.id };
+  // use this part to send the id???
+  return (tokenForOrganisation(org));
 };
 
 export const updateProfile = async (id, fields) => {
@@ -58,21 +57,21 @@ export const updateProfile = async (id, fields) => {
 };
 export const getOrganisations = async () => {
   try {
-    // await finding paths
+    // await finding orgs
     const orgs = await Organisation.find({});
-    // return paths
+    // return orgs
     return orgs;
   } catch (error) {
     throw new Error(`get orgs error: ${error}`);
   }
-  // return posts
+  // return all organisations
 };
 
 export const getOrganisation = async (id) => {
   try {
-    // await finding one path
+    // await finding one org
     const org = await Organisation.findById(id).exec();
-    // return path
+    // return organisation
     return org;
   } catch (error) {
     throw new Error(`get org error: ${error}`);

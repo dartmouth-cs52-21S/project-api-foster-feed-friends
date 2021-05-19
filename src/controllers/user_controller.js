@@ -15,8 +15,9 @@ export const signin = (user) => {
 
 // note the lovely destructuring here indicating that we are passing in an object with these 3 keys
 export const signup = async ({
-  email, password, fullName, hometown, path,
+  email, password, fullName, hometown,
 }) => {
+  console.log('signup');
   if (!email || !password) {
     throw new Error('You must provide email and password');
   }
@@ -35,20 +36,19 @@ export const signup = async ({
   user.password = password;
   user.fullName = fullName;
   user.hometown = hometown;
-  user.path = path;
   // this is similar to how you created a Post
   // and then save and return a token
   await user.save();
 
   // verify this part for the id???
-  return { token: tokenForUser(user), id: user.id };
+  return (tokenForUser(user));
 };
 
 export const updateProfile = async (id, fields) => {
   try {
     // await updating a post by id
     const options = { new: true };
-    const user = await User.findByIdAndUpdate(id, fields, options);
+    const user = await User.findByIdAndUpdate(id, fields, options).populate('Path');
     // return *updated* post
     return user;
   } catch (error) {
