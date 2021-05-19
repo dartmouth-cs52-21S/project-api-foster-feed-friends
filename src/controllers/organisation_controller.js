@@ -15,7 +15,7 @@ export const signin = (organisation) => {
 
 // note the lovely destructuring here indicating that we are passing in an object with these 3 keys
 export const signup = async ({
-  email, password, fullName, location, purpose, donationRoute,
+  email, password, orgname, location, pocname, donationRoute,
 }) => {
   if (!email || !password) {
     throw new Error('You must provide email and password');
@@ -33,9 +33,9 @@ export const signup = async ({
   const org = new Organisation();
   org.email = email;
   org.password = password;
-  org.fullName = fullName;
+  org.orgame = orgname;
   org.location = location;
-  org.purpose = purpose;
+  org.pocname = pocname;
   org.donationRoute = donationRoute;
   // this is similar to how you created a Post
   // and then save and return a token

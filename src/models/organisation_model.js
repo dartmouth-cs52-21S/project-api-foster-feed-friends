@@ -2,9 +2,10 @@ import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 const OrganisationSchema = new Schema({
-  email: { type: String, unique: true, lowercase: true },
   password: { type: String },
-  name: { type: String },
+  orgname: { type: String },
+  pocname: { type: String },
+  email: { type: String },
   donationRoute: { type: String },
   purpose: { type: String },
   bio: { type: String },
