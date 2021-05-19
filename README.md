@@ -4,6 +4,7 @@
 [*how?*](https://help.github.com/articles/about-readmes/#relative-links-and-image-paths-in-readme-files)
 
 TODO: short project description, some sample screenshots or mockups
+[mockups](https://www.figma.com/file/Hcpn03bH20z84UQfOMYEGj/?node-id=0%3A1) 
 
 ## Architecture
 
@@ -27,6 +28,7 @@ TODO: how to deploy the project
 TODO: list of authors
 - Juliet Elisa Giraso
 - William Perez
+- Melissa Valencia
 
 ## Acknowledgments
 # starter express app template
