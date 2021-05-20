@@ -29,7 +29,8 @@ TODO: list of authors
 - Juliet Elisa Giraso
 - William Perez
 - Melissa Valencia
-- Karina Montiel 
+- Karina Montiel
+- Gebriel Belaineh 
 
 ## Acknowledgments
 # starter express app template
