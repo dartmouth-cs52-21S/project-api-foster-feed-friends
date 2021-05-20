@@ -31,6 +31,7 @@ TODO: list of authors
 - Melissa Valencia
 - Karina Montiel
 - Gebriel Belaineh 
+- Muhtasim Miraz
 
 ## Acknowledgments
 # starter express app template
