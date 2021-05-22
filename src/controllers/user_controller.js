@@ -39,8 +39,6 @@ export const signup = async ({
   // this is similar to how you created a Post
   // and then save and return a token
   await user.save();
-
-  // verify this part for the id???
   return (tokenForUser(user));
 };
 
