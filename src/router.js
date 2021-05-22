@@ -48,7 +48,6 @@ router.post('/signup/org', async (req, res) => {
   }
 });
 router.post('/signin/org', requireSigninOrg, async (req, res) => {
-  console.log('hello from youth signin');
   try {
     const token = await Orgs.signin(req.body);
     res.json({ token });
@@ -56,6 +55,27 @@ router.post('/signin/org', requireSigninOrg, async (req, res) => {
     res.status(422).send({ error: error.toString() });
   }
 });
+
+router.route('/orgs')
+  .get(async (req, res) => {
+    try {
+      const org = await Orgs.getOrganisations();
+      res.json(org);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+
+router.route('/org/profile/:userID')
+  .get(async (req, res) => {
+    try {
+      const org = await Orgs.getOrganisation(req.params.userID);
+      res.json(org);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+
 router.post('/addMentor', async (req, res) => {
   try {
     const mentor = await mentors.createMentor(req.body);
@@ -107,4 +127,5 @@ router.route('/paths')
       res.status(500).json({ error });
     }
   });
+
 export default router;
