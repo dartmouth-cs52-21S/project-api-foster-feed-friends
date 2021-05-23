@@ -5,7 +5,7 @@ import * as Orgs from './controllers/organisation_controller';
 import * as Mentors from './controllers/mentor_controller';
 import { requireSignin } from './services/passport';
 import { requireAuthMentor, requireSigninMentor } from './services/passport_mentor';
-import { requireSigninOrg, requireAuthOrg } from './services/passport_org';
+import { requireSigninOrg } from './services/passport_org';
 
 const router = Router();
 
@@ -91,7 +91,7 @@ router.route('/orgs')
   });
 
 router.route('/org/profile/:userID')
-  .get(requireAuthOrg, async (req, res) => {
+  .get(async (req, res) => {
     try {
       const org = await Orgs.getOrganisation(req.params.userID);
       res.json(org);
