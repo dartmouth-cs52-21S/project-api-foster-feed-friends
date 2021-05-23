@@ -6,7 +6,7 @@
   "main": "src/server.js",
   "scripts": {
     "test": "eslint src",
-    "start": "nodemon src/server.js --exec babel-node",
+    "start": "nodemon src/server.js --exec ./node_modules/.bin/babel-node",
     "babel-start": "babel-node src/server.js",
     "build": "babel src -d dist",
     "prod": "npm run build; node dist/server.js"
@@ -22,8 +22,9 @@
   "dependencies": {
     "@babel/cli": "^7.13.16",
     "@babel/core": "^7.14.0",
-    "@babel/node": "^7.13.13",
+    "@babel/node": "^7.14.2",
     "@babel/preset-env": "^7.14.0",
+    "babel-node": "*",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",

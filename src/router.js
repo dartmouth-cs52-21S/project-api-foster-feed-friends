@@ -88,7 +88,7 @@ router.route('/addPath')
   });
 
 // send header from frontend for reqAuth
-router.route('/profile/:userID')
+router.route('/youth/profile/:userID')
   .get(requireAuth, async (req, res) => {
     try {
       const user = Users.updateProfile(req.params.id, req.body);
