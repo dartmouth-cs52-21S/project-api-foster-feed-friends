@@ -41,7 +41,10 @@ export const signup = async ({
   // and then save and return a token
   await org.save();
   // use this part to send the id???
-  return (tokenForOrganisation(org));
+  return ({
+    token: tokenForOrganisation(org),
+    ID: org._id,
+  });
 };
 
 export const updateProfile = async (id, fields) => {
