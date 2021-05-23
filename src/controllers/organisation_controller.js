@@ -55,6 +55,7 @@ export const updateProfile = async (id, fields) => {
     throw new Error(`update error: ${error}`);
   }
 };
+
 export const getOrganisations = async () => {
   try {
     // await finding orgs

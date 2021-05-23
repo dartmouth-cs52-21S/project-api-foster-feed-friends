@@ -4,8 +4,8 @@ import * as Users from './controllers/user_controller';
 import * as Orgs from './controllers/organisation_controller';
 import * as Mentors from './controllers/mentor_controller';
 import { requireSignin } from './services/passport';
-import { requireSigninOrg } from './services/passport_org';
 import { requireAuthMentor, requireSigninMentor } from './services/passport_mentor';
+import { requireSigninOrg, requireAuthOrg } from './services/passport_org';
 
 const router = Router();
 
@@ -49,7 +49,6 @@ router.post('/signup/org', async (req, res) => {
   }
 });
 router.post('/signin/org', requireSigninOrg, async (req, res) => {
-  console.log('hello from youth signin');
   try {
     const token = await Orgs.signin(req.body);
     res.json({ token });
@@ -57,6 +56,7 @@ router.post('/signin/org', requireSigninOrg, async (req, res) => {
     res.status(422).send({ error: error.toString() });
   }
 });
+
 router.post('/signup/mentor', async (req, res) => {
   console.log('hi from router');
   try {
@@ -70,6 +70,37 @@ router.post('/signup/mentor', async (req, res) => {
 });
 router.post('/signin/mentor', requireSigninMentor, async (req, res) => {
   console.log('hi from router');
+  try {
+    const result = await Mentors.signin(req.body);
+    // we could have a helper method inside frontend's signup
+    // that takes in the path and token and displays the info for that user?
+    res.json({ result, email: req.body.email });
+  } catch (error) {
+    res.status(422).send({ error: error.toString() });
+  }
+});
+
+router.route('/orgs')
+  .get(async (req, res) => {
+    try {
+      const org = await Orgs.getOrganisations();
+      res.json(org);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+
+router.route('/org/profile/:userID')
+  .get(requireAuthOrg, async (req, res) => {
+    try {
+      const org = await Orgs.getOrganisation(req.params.userID);
+      res.json(org);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+
+router.post('/addMentor', async (req, res) => {
   try {
     const result = await Mentors.signin(req.body);
     console.log(req.body);
@@ -125,6 +156,7 @@ router.route('/paths')
       res.status(500).json({ error });
     }
   });
+
 export default router;
 
 // curl -X GET "https://localhost:9090/api/mentor/60a91ad0b0d4feaa4d7297a7?"
