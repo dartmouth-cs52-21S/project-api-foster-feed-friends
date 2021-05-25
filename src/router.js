@@ -86,6 +86,7 @@ router.route('/orgs')
   .get(async (req, res) => {
     try {
       const org = await Orgs.getOrganisations();
+      console.log(org);
       res.json(org);
     } catch (error) {
       res.status(500).json({ error });
