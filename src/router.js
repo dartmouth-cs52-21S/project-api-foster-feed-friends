@@ -135,7 +135,7 @@ router.route('/org/profile/:userID')
   });
 
 router.route('/youth/profile/:userID')
-  .get(requireAuth, async (req, res) => {
+  .get(async (req, res) => {
     try {
       const user = await Users.getUser(req.params.userID);
       // have a way for the user to add more optional fields

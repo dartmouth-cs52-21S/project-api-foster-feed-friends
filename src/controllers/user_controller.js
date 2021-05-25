@@ -60,9 +60,9 @@ export const updateProfile = async (id, fields) => {
 export const getUser = async (id) => {
   try {
     // await finding one youth user
-    const org = await User.findById(id).exec();
+    const user = await User.findById(id).exec();
     // return youth user
-    return org;
+    return user;
   } catch (error) {
     throw new Error(`get youth error: ${error}`);
   }
