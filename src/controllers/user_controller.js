@@ -39,7 +39,10 @@ export const signup = async ({
   // this is similar to how you created a Post
   // and then save and return a token
   await user.save();
-  return (tokenForUser(user));
+  return ({
+    token: tokenForUser(user),
+    ID: user._id,
+  });
 };
 
 export const updateProfile = async (id, fields) => {

@@ -42,7 +42,10 @@ export const signup = async ({
   // and then save and return a token
   await mentor.save();
   // use this part to send the id???
-  return (tokenForMentor(mentor));
+  return ({
+    token: tokenForMentor(mentor),
+    ID: mentor._id,
+  });
 };
 
 export const getMentors = async () => {
