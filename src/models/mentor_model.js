@@ -4,9 +4,11 @@ import bcrypt from 'bcryptjs';
 const MentorSchema = new Schema({
   email: { type: String, unique: true, lowercase: true },
   password: { type: String },
-  fullName: { type: String },
+  firstName: { type: String },
+  lastName: { type: String },
   hometown: { type: String },
-  former: { type: Boolean },
+  organization: { type: String },
+  foster: { type: Boolean },
   path: { type: Schema.Types.ObjectId, ref: 'Path' },
   bio: { type: String },
 

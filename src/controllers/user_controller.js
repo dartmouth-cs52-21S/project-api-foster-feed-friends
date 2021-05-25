@@ -15,7 +15,7 @@ export const signin = (user) => {
 
 // note the lovely destructuring here indicating that we are passing in an object with these 3 keys
 export const signup = async ({
-  email, password, fullName, hometown,
+  email, password, firstName, lastName, age, hometown,
 }) => {
   console.log('signup');
   if (!email || !password) {
@@ -34,7 +34,9 @@ export const signup = async ({
   const user = new User();
   user.email = email;
   user.password = password;
-  user.fullName = fullName;
+  user.firstName = firstName;
+  user.lastName = lastName;
+  user.age = age;
   user.hometown = hometown;
   // this is similar to how you created a Post
   // and then save and return a token
