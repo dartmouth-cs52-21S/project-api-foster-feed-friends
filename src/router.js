@@ -3,7 +3,7 @@ import * as Paths from './controllers/path_controller';
 import * as Users from './controllers/user_controller';
 import * as Orgs from './controllers/organisation_controller';
 import * as Mentors from './controllers/mentor_controller';
-import { requireAuth, requireSignin } from './services/passport';
+import { requireSignin } from './services/passport';
 import { requireAuthMentor, requireSigninMentor } from './services/passport_mentor';
 import { requireSigninOrg, requireAuthOrg } from './services/passport_org';
 
