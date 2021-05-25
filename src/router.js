@@ -3,7 +3,7 @@ import * as Paths from './controllers/path_controller';
 import * as Users from './controllers/user_controller';
 import * as Orgs from './controllers/organisation_controller';
 import * as Mentors from './controllers/mentor_controller';
-import { requireSignin } from './services/passport';
+import { requireAuth, requireSignin } from './services/passport';
 import { requireAuthMentor, requireSigninMentor } from './services/passport_mentor';
 import { requireSigninOrg, requireAuthOrg } from './services/passport_org';
 
@@ -137,7 +137,7 @@ router.route('/org/profile/:userID')
   });
 
 router.route('/youth/profile/:userID')
-  .get(async (req, res) => {
+  .get(requireAuth, async (req, res) => {
     try {
       const user = await Users.getUser(req.params.userID);
       // have a way for the user to add more optional fields
