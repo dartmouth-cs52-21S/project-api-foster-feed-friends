@@ -22,7 +22,8 @@ router.post('/signup/youth', async (req, res) => {
     const result = await Users.signup(req.body);
     // we could have a helper method inside frontend's signup
     // that takes in the path and token and displays the info for that user?
-    res.json({ result, email: req.body.email });
+    // res.json({ result, email: req.body.email });
+    res.json(result);
   } catch (error) {
     res.status(422).send({ error: error.toString() });
   }
@@ -63,7 +64,8 @@ router.post('/signup/mentor', async (req, res) => {
     const result = await Mentors.signup(req.body);
     // we could have a helper method inside frontend's signup
     // that takes in the path and token and displays the info for that user?
-    res.json({ result, email: req.body.email });
+    // res.json({ result, email: req.body.email });
+    res.json(result);
   } catch (error) {
     res.status(422).send({ error: error.toString() });
   }
