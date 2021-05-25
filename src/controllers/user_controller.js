@@ -53,3 +53,14 @@ export const updateProfile = async (id, fields) => {
     throw new Error(`update error: ${error}`);
   }
 };
+
+export const getUser = async (id) => {
+  try {
+    // await finding one youth user
+    const org = await User.findById(id).exec();
+    // return youth user
+    return org;
+  } catch (error) {
+    throw new Error(`get youth error: ${error}`);
+  }
+};
