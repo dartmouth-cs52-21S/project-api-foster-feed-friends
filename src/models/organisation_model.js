@@ -10,7 +10,10 @@ const OrganisationSchema = new Schema({
   purpose: { type: String },
   bio: { type: String },
   location: { type: String },
-  events: { type: Array },
+  events: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Event',
+  }],
 
 }, {
   toObject: { virtuals: true },
