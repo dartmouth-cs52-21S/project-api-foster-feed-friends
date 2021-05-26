@@ -33,7 +33,7 @@ router.post('/signup/youth', async (req, res) => {
 router.post('/signin/youth', requireSignin, async (req, res) => {
   console.log('hi from youth sign in');
   try {
-    const token = await Users.signin(req.body);
+    const token = await Users.signin(req.user);
     res.json({ token, id: req.user._id });
   } catch (error) {
     console.log('hii');
