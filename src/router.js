@@ -118,8 +118,7 @@ router.route('/mentors')
     }
   });
 
-router.route('/mentor/profile/:userID');
-console.log('hi from mentor profile')
+router.route('/mentor/profile/:userID')
   .get(requireAuthMentor, async (req, res) => {
     console.log('Auth here');
     try {
