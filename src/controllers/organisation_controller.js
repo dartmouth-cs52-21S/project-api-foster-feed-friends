@@ -81,3 +81,23 @@ export const getOrganisation = async (id) => {
     throw new Error(`get org error: ${error}`);
   }
 };
+
+export const updateOrganisation = async (id, orgFields) => {
+  try {
+    // await updating a post by id
+    const options = { new: true };
+    const org = await Organisation.findByIdAndUpdate(id, orgFields, options);
+    return org;
+  } catch (error) {
+    throw new Error(`create post error: ${error}`);
+  }
+};
+
+export const getEvents = async (id) => {
+  try {
+    const org = await Organisation.findById(id);
+    return org.events;
+  } catch (error) {
+    throw new Error(`create post error: ${error}`);
+  }
+};

@@ -3,6 +3,7 @@ import * as Paths from './controllers/path_controller';
 import * as Users from './controllers/user_controller';
 import * as Orgs from './controllers/organisation_controller';
 import * as Mentors from './controllers/mentor_controller';
+import * as Events from './controllers/event_controller';
 import { requireAuth, requireSignin } from './services/passport';
 import { requireAuthMentor, requireSigninMentor } from './services/passport_mentor';
 import { requireSigninOrg, requireAuthOrg } from './services/passport_org';
@@ -76,7 +77,7 @@ router.post('/signin/mentor', requireSigninMentor, async (req, res) => {
     const result = await Mentors.signin(req.body);
     // we could have a helper method inside frontend's signup
     // that takes in the path and token and displays the info for that user?
-    res.json({ result, email: req.body.email });
+    res.json({ result, id: req.user._id });
   } catch (error) {
     res.status(422).send({ error: error.toString() });
   }
@@ -143,6 +144,18 @@ router.route('/youth/profile/:userID')
       const user = await Users.getUser(req.params.userID);
       // have a way for the user to add more optional fields
       res.json(user);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+router.route('/org/profile/:userID/event')
+  .post(requireAuthOrg, async (req, res) => {
+    try {
+      const event = await Events.createEvent(req.body);
+      const events = await Orgs.getEvents(req.params.userID);
+      events.push(event);
+      const org = await Orgs.updateOrganisation(req.params.userID, { events });
+      res.json(org);
     } catch (error) {
       res.status(500).json({ error });
     }
