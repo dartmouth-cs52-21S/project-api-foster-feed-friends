@@ -118,8 +118,10 @@ router.route('/mentors')
     }
   });
 
-router.route('/mentor/profile/:userID')
+router.route('/mentor/profile/:userID');
+console.log('hi from mentor profile')
   .get(requireAuthMentor, async (req, res) => {
+    console.log('Auth here');
     try {
       const mentor = await Mentors.getMentor(req.params.userID);
       res.json(mentor);
