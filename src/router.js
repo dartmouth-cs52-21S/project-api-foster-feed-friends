@@ -120,7 +120,7 @@ router.route('/mentors')
 router.route('/mentor/profile/:userID')
   .get(requireAuthMentor, async (req, res) => {
     try {
-      const mentor = await Orgs.getMentor(req.params.userID);
+      const mentor = await Mentors.getMentor(req.params.userID);
       res.json(mentor);
     } catch (error) {
       res.status(500).json({ error });
