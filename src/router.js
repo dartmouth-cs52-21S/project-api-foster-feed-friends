@@ -34,7 +34,7 @@ router.post('/signin/youth', requireSignin, async (req, res) => {
   console.log('hi from youth sign in');
   try {
     const token = await Users.signin(req.user);
-    res.json({ token, ID: req.user._id });
+    res.json({ token, ID: req.user.id });
   } catch (error) {
     console.log('hii');
     res.status(422).send({ error: error.toString() });
@@ -53,7 +53,7 @@ router.post('/signup/org', async (req, res) => {
 router.post('/signin/org', requireSigninOrg, async (req, res) => {
   try {
     const token = await Orgs.signin(req.user);
-    res.json({ token, ID: req.user._id });
+    res.json({ token, ID: req.user.id });
   } catch (error) {
     res.status(422).send({ error: error.toString() });
   }
