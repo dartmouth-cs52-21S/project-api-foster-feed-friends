@@ -74,10 +74,10 @@ router.post('/signup/mentor', async (req, res) => {
 router.post('/signin/mentor', requireSigninMentor, async (req, res) => {
   console.log('hi from router');
   try {
-    const result = await Mentors.signin(req.body);
+    const token = await Mentors.signin(req.body);
     // we could have a helper method inside frontend's signup
     // that takes in the path and token and displays the info for that user?
-    res.json({ result, id: req.user._id });
+    res.json({ token, id: req.user._id });
   } catch (error) {
     res.status(422).send({ error: error.toString() });
   }
