@@ -47,18 +47,6 @@ export const signup = async ({
   });
 };
 
-export const updateProfile = async (id, fields) => {
-  try {
-    // await updating a post by id
-    const options = { new: true };
-    const org = await Organisation.findByIdAndUpdate(id, fields, options);
-    // return *updated* post
-    return org;
-  } catch (error) {
-    throw new Error(`update error: ${error}`);
-  }
-};
-
 export const getOrganisations = async () => {
   try {
     // await finding orgs

@@ -47,12 +47,12 @@ export const signup = async ({
   });
 };
 
-export const updateProfile = async (id, fields) => {
+export const updateUser = async (id, fields) => {
   try {
     // await updating a post by id
     const options = { new: true };
     const user = await User.findByIdAndUpdate(id, fields, options).populate('Path');
-    // return *updated* post
+    // return *updated* user object
     return user;
   } catch (error) {
     throw new Error(`update error: ${error}`);

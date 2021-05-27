@@ -72,19 +72,14 @@ export const getMentor = async (id) => {
   }
 };
 
-export const createMentor = async (fields) => {
-  // await creating a path
-  const mentor = new Mentor();
-  mentor.fullName = fields.fullName;
-  mentor.hometown = fields.hometown;
-  mentor.bio = fields.bio;
-  console.log(mentor);
-  // return path
+export const updateMentor = async (id, fields) => {
   try {
-    // await creating a path
-    const savedmentor = await mentor.save();
-    return savedmentor;
+    // await updating a post by id
+    const options = { new: true };
+    const mentor = await Mentor.findByIdAndUpdate(id, fields, options);
+    // return *updated* post
+    return mentor;
   } catch (error) {
-    throw new Error(`create mentor error: ${error}`);
+    throw new Error(`update mentor error: ${error}`);
   }
 };

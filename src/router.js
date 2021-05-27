@@ -175,11 +175,35 @@ router.route('/addPath')
   });
 
 // send header from frontend for reqAuth
-router.route('/mentor/:userID')
+router.route('/mentor/edit/:userID')
   .get(requireAuthMentor, async (req, res) => {
     try {
       // const { user } = req;
-      const result = await Mentors.getMentor(req.params.userID);
+      const result = await Mentors.updateMentor(req.params.userID, req.body);
+      // have a way for the user to add more optional fields
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+// send header from frontend for reqAuth
+router.route('/youth/edit/:userID')
+  .get(requireAuth, async (req, res) => {
+    try {
+      // const { user } = req;
+      const result = await Users.updateUser(req.params.userID, req.body);
+      // have a way for the user to add more optional fields
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+// send header from frontend for reqAuth
+router.route('/org/edit/:userID')
+  .get(requireAuthMentor, async (req, res) => {
+    try {
+      // const { user } = req;
+      const result = await Orgs.updateOrganisation(req.params.userID, req.body);
       // have a way for the user to add more optional fields
       res.json(result);
     } catch (error) {
