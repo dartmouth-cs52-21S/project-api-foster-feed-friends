@@ -15,7 +15,7 @@ export const signin = (mentor) => {
 
 // note the lovely destructuring here indicating that we are passing in an object with these 3 keys
 export const signup = async ({
-  email, password, firstName, lastName, hometown, foster, path, bio,
+  email, password, firstName, lastName, hometown, organization, foster, path, bio,
 }) => {
   if (!email || !password) {
     throw new Error('You must provide email and password');
@@ -36,6 +36,7 @@ export const signup = async ({
   mentor.firstName = firstName;
   mentor.lastName = lastName;
   mentor.hometown = hometown;
+  mentor.organization = organization;
   mentor.foster = foster;
   mentor.path = path;
   mentor.bio = bio;
