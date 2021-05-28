@@ -2,6 +2,7 @@ import Event from '../models/event_model';
 
 export const createEvent = async (eventFields) => {
   // await creating a path
+  console.log(eventFields);
   const event = new Event();
   event.name = eventFields.name;
   event.date = eventFields.date;
@@ -24,6 +25,17 @@ export const getEvent = async (id) => {
     const event = await Event.findById(id).exec();
     // return path
     return event;
+  } catch (error) {
+    throw new Error(`get event error: ${error}`);
+  }
+};
+
+export const getEvents = async () => {
+  try {
+    // await finding one path
+    const events = await Event.find();
+    // return path
+    return events;
   } catch (error) {
     throw new Error(`get event error: ${error}`);
   }

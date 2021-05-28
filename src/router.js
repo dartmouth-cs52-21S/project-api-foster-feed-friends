@@ -155,6 +155,7 @@ router.route('/org/profile/:userID/event')
       const event = await Events.createEvent(req.body);
       const events = await Orgs.getEvents(req.params.userID);
       events.push(event);
+      console.log(events);
       const org = await Orgs.updateOrganisation(req.params.userID, { events });
       res.json(org);
     } catch (error) {
@@ -180,6 +181,30 @@ router.route('/mentor/edit/:userID')
     try {
       // const { user } = req;
       const result = await Mentors.updateMentor(req.params.userID, req.body);
+      // have a way for the user to add more optional fields
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+
+router.route('/org/:userID/events')
+  .get(requireAuthOrg, async (req, res) => {
+    try {
+      // const { user } = req;
+      const result = await Events.getEvents();
+      // have a way for the user to add more optional fields
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+
+router.route('/org/:userID/event')
+  .get(requireAuthOrg, async (req, res) => {
+    try {
+      // const { user } = req;
+      const result = await Events.getEvent();
       // have a way for the user to add more optional fields
       res.json(result);
     } catch (error) {

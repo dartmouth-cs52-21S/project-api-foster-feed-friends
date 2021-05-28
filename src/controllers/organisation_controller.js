@@ -74,7 +74,9 @@ export const updateOrganisation = async (id, orgFields) => {
   try {
     // await updating a post by id
     const options = { new: true };
+    console.log(orgFields);
     const org = await Organisation.findByIdAndUpdate(id, orgFields, options);
+    console.log(org);
     return org;
   } catch (error) {
     throw new Error(`create post error: ${error}`);
@@ -83,7 +85,7 @@ export const updateOrganisation = async (id, orgFields) => {
 
 export const getEvents = async (id) => {
   try {
-    const org = await Organisation.findById(id);
+    const org = await Organisation.findById(id).populate('events');
     return org.events;
   } catch (error) {
     throw new Error(`create post error: ${error}`);
