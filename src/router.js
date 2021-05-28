@@ -200,7 +200,7 @@ router.route('/youth/profile/:userID/edit')
   });
 // send header from frontend for reqAuth
 router.route('/org/profile/:userID/edit')
-  .put(requireAuthMentor, async (req, res) => {
+  .put(requireAuthOrg, async (req, res) => {
     try {
       // const { user } = req;
       const result = await Orgs.updateOrganisation(req.params.userID, req.body);
