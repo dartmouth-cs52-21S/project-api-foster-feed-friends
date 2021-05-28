@@ -9,7 +9,7 @@ const MentorSchema = new Schema({
   hometown: { type: String },
   organization: { type: String },
   foster: { type: Boolean },
-  path: { type: Schema.Types.ObjectId, ref: 'Path' },
+  careerPath: { type: String },
   bio: { type: String },
 
 }, {

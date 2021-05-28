@@ -176,8 +176,8 @@ router.route('/addPath')
   });
 
 // send header from frontend for reqAuth
-router.route('/mentor/edit/:userID')
-  .get(requireAuthMentor, async (req, res) => {
+router.route('/mentor/profile/:userID/edit')
+  .put(requireAuthMentor, async (req, res) => {
     try {
       // const { user } = req;
       const result = await Mentors.updateMentor(req.params.userID, req.body);
@@ -212,8 +212,8 @@ router.route('/org/:userID/event')
     }
   });
 // send header from frontend for reqAuth
-router.route('/youth/edit/:userID')
-  .get(requireAuth, async (req, res) => {
+router.route('/youth/profile/:userID/edit')
+  .put(requireAuth, async (req, res) => {
     try {
       // const { user } = req;
       const result = await Users.updateUser(req.params.userID, req.body);
@@ -224,8 +224,8 @@ router.route('/youth/edit/:userID')
     }
   });
 // send header from frontend for reqAuth
-router.route('/org/edit/:userID')
-  .get(requireAuthMentor, async (req, res) => {
+router.route('/org/profile/:userID/edit')
+  .put(requireAuthOrg, async (req, res) => {
     try {
       // const { user } = req;
       const result = await Orgs.updateOrganisation(req.params.userID, req.body);
