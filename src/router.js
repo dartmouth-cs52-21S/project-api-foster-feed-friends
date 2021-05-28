@@ -175,7 +175,7 @@ router.route('/addPath')
   });
 
 // send header from frontend for reqAuth
-router.route('/mentor/edit/:userID')
+router.route('/mentor/profile/:userID/edit')
   .get(requireAuthMentor, async (req, res) => {
     try {
       // const { user } = req;
@@ -187,7 +187,7 @@ router.route('/mentor/edit/:userID')
     }
   });
 // send header from frontend for reqAuth
-router.route('/youth/edit/:userID')
+router.route('/youth/profile/:userID/edit')
   .get(requireAuth, async (req, res) => {
     try {
       // const { user } = req;
@@ -199,7 +199,7 @@ router.route('/youth/edit/:userID')
     }
   });
 // send header from frontend for reqAuth
-router.route('/org/edit/:userID')
+router.route('/org/profile/:userID/edit')
   .get(requireAuthMentor, async (req, res) => {
     try {
       // const { user } = req;
