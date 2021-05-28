@@ -130,7 +130,7 @@ router.route('/mentor/profile/:userID')
   });
 
 router.route('/org/profile/:userID')
-  .get(requireAuthOrg, async (req, res) => {
+  .get(async (req, res) => {
     try {
       const org = await Orgs.getOrganisation(req.params.userID);
       res.json(org);
@@ -149,8 +149,9 @@ router.route('/youth/profile/:userID')
       res.status(500).json({ error });
     }
   });
+
 router.route('/org/profile/:userID/event')
-  .post(requireAuthOrg, async (req, res) => {
+  .post(async (req, res) => {
     try {
       const event = await Events.createEvent(req.body);
       const events = await Orgs.getEvents(req.params.userID);
