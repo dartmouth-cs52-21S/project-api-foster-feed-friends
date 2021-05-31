@@ -12,6 +12,7 @@ const UserSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Mentor',
   }],
+  orgname: { type: String },
   path: { type: Schema.Types.ObjectId, ref: 'Path' },
   pocname: { type: String },
   donationRoute: { type: String },
