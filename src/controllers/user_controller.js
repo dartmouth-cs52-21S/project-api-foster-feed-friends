@@ -49,6 +49,7 @@ export const signup = async (fields) => {
   user.careerPath = fields.careerPath;
   user.type = fields.type;
   user.orgname = fields.orgname;
+  user.momentsPath = fields.momentsPath;
   // this is similar to how you created a Post
   // and then save and return a token
   await user.save();
@@ -107,6 +108,7 @@ export const getOrganisations = async () => {
   try {
     // await finding orgs
     const orgs = await User.find({ type: 'org' });
+    console.log(orgs);
     // return orgs
     return orgs;
   } catch (error) {

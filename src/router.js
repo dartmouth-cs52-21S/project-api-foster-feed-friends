@@ -191,11 +191,13 @@ router.route('/org/:userID/events')
     }
   });
 
-router.route('/org/:userID/event')
+router.route('/org/:userID/event/:eventID')
   .get(requireAuth, async (req, res) => {
     try {
       // const { user } = req;
-      const result = await Events.getEvent();
+      console.log('req', req.params.eventID);
+      // get a specific event
+      const result = await Events.getEvent(req.params.eventID);
       // have a way for the user to add more optional fields
       res.json(result);
     } catch (error) {
