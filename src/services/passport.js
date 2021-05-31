@@ -52,6 +52,7 @@ const jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
     // find a user that matches the token
     user = await User.findById(payload.sub);
   } catch (error) {
+    console.log(error);
     done(error, false);
   }
   // if found
