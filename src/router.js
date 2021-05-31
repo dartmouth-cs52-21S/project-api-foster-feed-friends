@@ -18,7 +18,6 @@ router.get('/test', (req, res) => {
 });
 // signup
 router.post('/signup/youth', async (req, res) => {
-  console.log('hi from router');
   try {
     const result = await Users.signup(req.body);
     // we could have a helper method inside frontend's signup
@@ -31,12 +30,10 @@ router.post('/signup/youth', async (req, res) => {
 });
 
 router.post('/signin/youth', requireSignin, async (req, res) => {
-  console.log('hi from youth sign in');
   try {
     const token = await Users.signin(req.user);
     res.json({ token, ID: req.user.id });
   } catch (error) {
-    console.log('hii');
     res.status(422).send({ error: error.toString() });
   }
 });
@@ -46,10 +43,8 @@ router.post('/signup/org', async (req, res) => {
     const result = await Users.signup(req.body);
     // we could have a helper method inside frontend's signup
     // that takes in the path and token and displays the info for that user?
-    console.log(result);
     res.json(result);
   } catch (error) {
-    console.log(error);
     res.status(422).send({ error: error.toString() });
   }
 });
@@ -63,7 +58,6 @@ router.post('/signin/org', requireSignin, async (req, res) => {
 });
 
 router.post('/signup/mentor', async (req, res) => {
-  console.log('hi from router');
   try {
     const result = await Users.signup(req.body);
     // we could have a helper method inside frontend's signup
@@ -75,7 +69,6 @@ router.post('/signup/mentor', async (req, res) => {
   }
 });
 router.post('/signin/mentor', requireSignin, async (req, res) => {
-  console.log('hi from router');
   try {
     const token = await Users.signin(req.user);
     // we could have a helper method inside frontend's signup
@@ -90,7 +83,6 @@ router.route('/orgs')
   .get(async (req, res) => {
     try {
       const org = await Users.getOrganisations();
-      console.log(org);
       res.json(org);
     } catch (error) {
       res.status(500).json({ error });
@@ -111,7 +103,6 @@ router.route('/mentors')
 
 router.route('/mentor/profile/:userID')
   .get(requireAuth, async (req, res) => {
-    console.log('Auth here');
     try {
       const mentor = await Users.getUser(req.params.userID);
       res.json(mentor);
@@ -123,11 +114,9 @@ router.route('/mentor/profile/:userID')
 router.route('/org/profile/:userID')
   .get(requireAuth, async (req, res) => {
     try {
-      console.log(req.params.userID);
       const org = await Users.getUser(req.params.userID);
       res.json(org);
     } catch (error) {
-      console.log(error);
       res.status(500).json({ error });
     }
   });
@@ -143,12 +132,11 @@ router.route('/youth/profile/:userID')
     }
   });
 router.route('/org/profile/:userID/event')
-  .post(async (req, res) => {
+  .post(requireAuth, async (req, res) => {
     try {
       const event = await Events.createEvent(req.body);
       const events = await Users.getEvents(req.params.userID);
       events.push(event);
-      console.log(events);
       const org = await Users.updateUser(req.params.userID, { events });
       res.json(org);
     } catch (error) {
@@ -197,7 +185,6 @@ router.route('/org/:userID/event/:eventID')
   .get(requireAuth, async (req, res) => {
     try {
       // const { user } = req;
-      console.log('req', req.params.eventID);
       // get a specific event
       const result = await Events.getEvent(req.params.eventID);
       // have a way for the user to add more optional fields
