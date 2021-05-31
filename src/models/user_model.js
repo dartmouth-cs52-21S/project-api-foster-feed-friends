@@ -27,6 +27,7 @@ const UserSchema = new Schema({
   foster: { type: String },
   careerPath: { type: String },
   type: { type: String },
+  momentsPath: { type: Array },
 
 }, {
   toObject: { virtuals: true },
