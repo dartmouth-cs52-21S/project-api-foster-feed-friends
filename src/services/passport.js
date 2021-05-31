@@ -1,4 +1,4 @@
-import { Passport } from 'passport';
+import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import dotenv from 'dotenv';
@@ -10,7 +10,6 @@ dotenv.config({ silent: true });
 // options for local strategy, we'll use email AS the username
 // not have separate ones
 const localOptions = { usernameField: 'email' };
-const passport = new Passport();
 // options for jwt strategy
 // we'll pass in the jwt in an `authorization` header
 // so passport can find it there
