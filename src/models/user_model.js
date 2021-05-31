@@ -28,7 +28,7 @@ const UserSchema = new Schema({
   careerPath: { type: String },
   type: { type: String },
   momentsPath:  [{
-    type: {},
+    type: Array,
     ref: 'momentsPath',
   }],
 
