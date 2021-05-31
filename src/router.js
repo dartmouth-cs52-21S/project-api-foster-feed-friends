@@ -143,7 +143,7 @@ router.route('/youth/profile/:userID')
     }
   });
 router.route('/org/profile/:userID/event')
-  .post(requireAuth, async (req, res) => {
+  .post(async (req, res) => {
     try {
       const event = await Events.createEvent(req.body);
       const events = await Users.getEvents(req.params.userID);
