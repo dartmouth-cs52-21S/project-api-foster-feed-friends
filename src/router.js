@@ -42,11 +42,14 @@ router.post('/signin/youth', requireSignin, async (req, res) => {
 });
 router.post('/signup/org', async (req, res) => {
   try {
+    console.log(req.body);
     const result = await Orgs.signup(req.body);
     // we could have a helper method inside frontend's signup
     // that takes in the path and token and displays the info for that user?
+    console.log('result', result);
     res.json(result);
   } catch (error) {
+    console.log(error);
     res.status(422).send({ error: error.toString() });
   }
 });
