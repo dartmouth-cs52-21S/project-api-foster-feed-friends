@@ -14,16 +14,14 @@ export const signin = (user) => {
 };
 
 // note the lovely destructuring here indicating that we are passing in an object with these 3 keys
-export const signup = async ({
-  email, password, firstName, lastName, age, hometown,
-}) => {
+export const signup = async (fields) => {
   console.log('signup');
-  if (!email || !password) {
+  if (!fields.email || !fields.password) {
     throw new Error('You must provide email and password');
   }
 
   // See if a user with the given email exists
-  const existingUser = await User.findOne({ email });
+  const existingUser = await User.findOne({ email: fields.email });
   if (existingUser) {
     // If a user with email does exist, return an error
     throw new Error('Email is in use');
@@ -32,12 +30,26 @@ export const signup = async ({
   // 🚀 TODO:
   // here you should use the User model to create a new user.
   const user = new User();
-  user.email = email;
-  user.password = password;
-  user.firstName = firstName;
-  user.lastName = lastName;
-  user.age = age;
-  user.hometown = hometown;
+  user.email = fields.email;
+  user.password = fields.password;
+  user.firstName = fields.firstName;
+  user.lastName = fields.lastName;
+  user.age = fields.age;
+  user.hometown = fields.hometown;
+  user.messaged = fields.messaged;
+  user.path = fields.path;
+  user.pocname = fields.pocname;
+  user.donationRoute = fields.donationRoute;
+  user.purpose = fields.purpose;
+  user.bio = fields.bio;
+  user.location = fields.location;
+  user.events = fields.events;
+  user.organization = fields.organization;
+  user.foster = fields.foster;
+  user.careerPath = fields.careerPath;
+  user.type = fields.type;
+  user.orgname = fields.orgname;
+  user.momentsPath = fields.momentsPath;
   // this is similar to how you created a Post
   // and then save and return a token
   await user.save();
@@ -63,9 +75,63 @@ export const getUser = async (id) => {
   try {
     // await finding one youth user
     const user = await User.findById(id).exec();
+    console.log(user);
     // return youth user
     return user;
   } catch (error) {
     throw new Error(`get youth error: ${error}`);
+  }
+};
+
+export const getUsers = async () => {
+  try {
+    // await finding orgs
+    const orgs = await User.find({});
+    // return orgs
+    return orgs;
+  } catch (error) {
+    throw new Error(`get orgs error: ${error}`);
+  }
+  // return all organisations
+};
+
+export const getEvents = async (id) => {
+  try {
+    const org = await User.findById(id).populate('events');
+    return org.events;
+  } catch (error) {
+    throw new Error(`create post error: ${error}`);
+  }
+};
+
+export const getOrganisations = async () => {
+  try {
+    // await finding orgs
+    const orgs = await User.find({ type: 'org' });
+    console.log(orgs);
+    // return orgs
+    return orgs;
+  } catch (error) {
+    throw new Error(`get orgs error: ${error}`);
+  }
+  // return all organisations
+};
+
+export const getMentors = async () => {
+  try {
+    const mentors = await User.find({ type: 'mentor' });
+    return mentors;
+  } catch (error) {
+    throw new Error(`get orgs error: ${error}`);
+  }
+};
+
+export const getAll = async () => {
+  try {
+    const mentors = await User.find({ type: 'mentor' });
+    const orgs = await User.find({ type: 'org' });
+    return { mentors, orgs };
+  } catch (error) {
+    throw new Error(`get all error: ${error}`);
   }
 };

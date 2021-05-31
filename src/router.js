@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import * as Paths from './controllers/path_controller';
 import * as Users from './controllers/user_controller';
-import * as Orgs from './controllers/organisation_controller';
-import * as Mentors from './controllers/mentor_controller';
+// import * as Orgs from './controllers/organisation_controller';
+// import * as Mentors from './controllers/mentor_controller';
 import * as Events from './controllers/event_controller';
 import { requireAuth, requireSignin } from './services/passport';
-import { requireAuthMentor, requireSigninMentor } from './services/passport_mentor';
-import { requireSigninOrg, requireAuthOrg } from './services/passport_org';
+// import { requireAuthMentor, requireSigninMentor } from './services/passport_mentor';
+// import { requireSigninOrg, requireAuthOrg } from './services/passport_org';
 
 const router = Router();
 
@@ -40,22 +40,22 @@ router.post('/signin/youth', requireSignin, async (req, res) => {
     res.status(422).send({ error: error.toString() });
   }
 });
+
 router.post('/signup/org', async (req, res) => {
   try {
-    console.log(req.body);
-    const result = await Orgs.signup(req.body);
+    const result = await Users.signup(req.body);
     // we could have a helper method inside frontend's signup
     // that takes in the path and token and displays the info for that user?
-    console.log('result', result);
+    console.log(result);
     res.json(result);
   } catch (error) {
     console.log(error);
     res.status(422).send({ error: error.toString() });
   }
 });
-router.post('/signin/org', requireSigninOrg, async (req, res) => {
+router.post('/signin/org', requireSignin, async (req, res) => {
   try {
-    const token = await Orgs.signin(req.user);
+    const token = await Users.signin(req.user);
     res.json({ token, ID: req.user.id });
   } catch (error) {
     res.status(422).send({ error: error.toString() });
@@ -65,7 +65,7 @@ router.post('/signin/org', requireSigninOrg, async (req, res) => {
 router.post('/signup/mentor', async (req, res) => {
   console.log('hi from router');
   try {
-    const result = await Mentors.signup(req.body);
+    const result = await Users.signup(req.body);
     // we could have a helper method inside frontend's signup
     // that takes in the path and token and displays the info for that user?
     // res.json({ result, email: req.body.email });
@@ -74,10 +74,10 @@ router.post('/signup/mentor', async (req, res) => {
     res.status(422).send({ error: error.toString() });
   }
 });
-router.post('/signin/mentor', requireSigninMentor, async (req, res) => {
+router.post('/signin/mentor', requireSignin, async (req, res) => {
   console.log('hi from router');
   try {
-    const token = await Mentors.signin(req.user);
+    const token = await Users.signin(req.user);
     // we could have a helper method inside frontend's signup
     // that takes in the path and token and displays the info for that user?
     res.json({ token, ID: req.user.id });
@@ -89,7 +89,7 @@ router.post('/signin/mentor', requireSigninMentor, async (req, res) => {
 router.route('/orgs')
   .get(async (req, res) => {
     try {
-      const org = await Orgs.getOrganisations();
+      const org = await Users.getOrganisations();
       console.log(org);
       res.json(org);
     } catch (error) {
@@ -97,22 +97,10 @@ router.route('/orgs')
     }
   });
 
-router.post('/addMentor', async (req, res) => {
-  try {
-    const result = await Mentors.signin(req.body);
-    console.log(req.body);
-    // we could have a helper method inside frontend's signup
-    // that takes in the path and token and displays the info for that user?
-    res.json({ result, email: req.body.email });
-  } catch (error) {
-    res.status(422).send({ error: error.toString() });
-  }
-});
-
 router.route('/mentors')
   .get(async (req, res) => {
     try {
-      const result = await Mentors.getMentors();
+      const result = await Users.getMentors();
       // we could have a helper method inside frontend's signup
       // that takes in the path and token and displays the info for that user?
       res.json(result);
@@ -122,10 +110,10 @@ router.route('/mentors')
   });
 
 router.route('/mentor/profile/:userID')
-  .get(requireAuthMentor, async (req, res) => {
+  .get(requireAuth, async (req, res) => {
     console.log('Auth here');
     try {
-      const mentor = await Mentors.getMentor(req.params.userID);
+      const mentor = await Users.getUser(req.params.userID);
       res.json(mentor);
     } catch (error) {
       res.status(500).json({ error });
@@ -133,11 +121,13 @@ router.route('/mentor/profile/:userID')
   });
 
 router.route('/org/profile/:userID')
-  .get(requireAuthOrg, async (req, res) => {
+  .get(requireAuth, async (req, res) => {
     try {
-      const org = await Orgs.getOrganisation(req.params.userID);
+      console.log(req.params.userID);
+      const org = await Users.getUser(req.params.userID);
       res.json(org);
     } catch (error) {
+      console.log(error);
       res.status(500).json({ error });
     }
   });
@@ -153,12 +143,13 @@ router.route('/youth/profile/:userID')
     }
   });
 router.route('/org/profile/:userID/event')
-  .post(requireAuthOrg, async (req, res) => {
+  .post(requireAuth, async (req, res) => {
     try {
       const event = await Events.createEvent(req.body);
-      const events = await Orgs.getEvents(req.params.userID);
+      const events = await Users.getEvents(req.params.userID);
       events.push(event);
-      const org = await Orgs.updateOrganisation(req.params.userID, { events });
+      console.log(events);
+      const org = await Users.updateUser(req.params.userID, { events });
       res.json(org);
     } catch (error) {
       res.status(500).json({ error });
@@ -178,11 +169,37 @@ router.route('/addPath')
   });
 
 // send header from frontend for reqAuth
-router.route('/mentor/edit/:userID')
-  .get(requireAuthMentor, async (req, res) => {
+router.route('/mentor/profile/:userID/edit')
+  .put(requireAuth, async (req, res) => {
     try {
       // const { user } = req;
-      const result = await Mentors.updateMentor(req.params.userID, req.body);
+      const result = await Users.updateUser(req.params.userID, req.body);
+      // have a way for the user to add more optional fields
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+
+router.route('/org/:userID/events')
+  .get(requireAuth, async (req, res) => {
+    try {
+      // const { user } = req;
+      const result = await Events.getEvents();
+      // have a way for the user to add more optional fields
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+
+router.route('/org/:userID/event/:eventID')
+  .get(requireAuth, async (req, res) => {
+    try {
+      // const { user } = req;
+      console.log('req', req.params.eventID);
+      // get a specific event
+      const result = await Events.getEvent(req.params.eventID);
       // have a way for the user to add more optional fields
       res.json(result);
     } catch (error) {
@@ -190,8 +207,8 @@ router.route('/mentor/edit/:userID')
     }
   });
 // send header from frontend for reqAuth
-router.route('/youth/edit/:userID')
-  .get(requireAuth, async (req, res) => {
+router.route('/youth/profile/:userID/edit')
+  .put(requireAuth, async (req, res) => {
     try {
       // const { user } = req;
       const result = await Users.updateUser(req.params.userID, req.body);
@@ -202,22 +219,40 @@ router.route('/youth/edit/:userID')
     }
   });
 // send header from frontend for reqAuth
-router.route('/org/edit/:userID')
-  .get(requireAuthMentor, async (req, res) => {
+router.route('/org/profile/:userID/edit')
+  .put(requireAuth, async (req, res) => {
     try {
       // const { user } = req;
-      const result = await Orgs.updateOrganisation(req.params.userID, req.body);
+      const result = await Users.updateUser(req.params.userID, req.body);
       // have a way for the user to add more optional fields
       res.json(result);
     } catch (error) {
       res.status(500).json({ error });
     }
   });
-router.route('/paths')
+router.route('/networks/resources')
   .get(async (req, res) => {
     try {
-      const paths = await Paths.getPaths();
-      res.json(paths);
+      const orgs = await Users.getOrganisations();
+      res.json(orgs);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+router.route('/networks/mentors')
+  .get(async (req, res) => {
+    try {
+      const mentors = await Users.getMentors();
+      res.json(mentors);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+router.route('/networks/all')
+  .get(async (req, res) => {
+    try {
+      const all = await Users.getAll();
+      res.json(all);
     } catch (error) {
       res.status(500).json({ error });
     }
