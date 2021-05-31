@@ -13,6 +13,7 @@ export const createEvent = async (eventFields) => {
   try {
     // await creating a path
     const savedEvent = await event.save();
+    console.log(savedEvent);
     return savedEvent;
   } catch (error) {
     throw new Error(`create event error: ${error}`);

@@ -107,6 +107,7 @@ export const getOrganisations = async () => {
   try {
     // await finding orgs
     const orgs = await User.find({ type: 'org' });
+    console.log(orgs);
     // return orgs
     return orgs;
   } catch (error) {
