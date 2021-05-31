@@ -235,6 +235,24 @@ router.route('/networks/resources')
       res.status(500).json({ error });
     }
   });
+router.route('/networks/mentors')
+  .get(async (req, res) => {
+    try {
+      const mentors = await Users.getMentors();
+      res.json(mentors);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+router.route('/networks/all')
+  .get(async (req, res) => {
+    try {
+      const all = await Users.getAll();
+      res.json(all);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
 
 export default router;
 

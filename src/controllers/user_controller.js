@@ -117,12 +117,19 @@ export const getOrganisations = async () => {
 
 export const getMentors = async () => {
   try {
-    // await finding orgs
-    const orgs = await User.find({ type: 'mentor' });
-    // return orgs
-    return orgs;
+    const mentors = await User.find({ type: 'mentor' });
+    return mentors;
   } catch (error) {
     throw new Error(`get orgs error: ${error}`);
   }
-  // return all organisations
+};
+
+export const getAll = async () => {
+  try {
+    const mentors = await User.find({ type: 'mentor' });
+    const orgs = await User.find({ type: 'org' });
+    return { mentors, orgs };
+  } catch (error) {
+    throw new Error(`get all error: ${error}`);
+  }
 };
