@@ -27,7 +27,7 @@ const UserSchema = new Schema({
   foster: { type: String },
   careerPath: { type: String },
   type: { type: String },
-  momentsPath:  [{
+  momentsPath: [{
     type: Object,
     ref: 'momentsPath',
   }],

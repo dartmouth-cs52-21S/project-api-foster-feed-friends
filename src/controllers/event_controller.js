@@ -2,7 +2,6 @@ import Event from '../models/event_model';
 
 export const createEvent = async (eventFields) => {
   // await creating a path
-  console.log(eventFields);
   const event = new Event();
   event.name = eventFields.name;
   event.date = eventFields.date;

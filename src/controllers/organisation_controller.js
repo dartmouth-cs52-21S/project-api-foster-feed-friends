@@ -62,7 +62,7 @@ export const getOrganisations = async () => {
 export const getOrganisation = async (id) => {
   try {
     // await finding one org
-    const org = await Organisation.findById(id).exec();
+    const org = await (await Organisation.findById(id).exec());
     // return organisation
     return org;
   } catch (error) {
