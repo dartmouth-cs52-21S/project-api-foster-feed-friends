@@ -125,7 +125,15 @@ router.route('/org/profile/:userID')
       res.status(500).json({ error });
     }
   });
-
+  router.route('/orgs/profile/:userID')
+  .get(requireAuth, async (req, res) => {
+    try {
+      const org = await Users.getUser(req.params.userID);
+      res.json(org);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
 router.route('/youth/profile/:userID')
   .get(requireAuth, async (req, res) => {
     try {
@@ -149,6 +157,7 @@ router.route('/org/profile/:userID/event')
       res.status(500).json({ error });
     }
   });
+  
 
 router.route('/addPath')
   .post(async (req, res) => {
