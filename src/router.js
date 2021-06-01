@@ -117,7 +117,7 @@ router.route('/mentor/profile/:userID')
   });
 
 router.route('/org/profile/:userID')
-  .get(requireAuth, async (req, res) => {
+  .get(async (req, res) => {
     try {
       const org = await Users.getUser(req.params.userID);
       res.json(org);
@@ -185,10 +185,11 @@ router.route('/mentor/profile/:userID/edit')
   });
 
 router.route('/org/:userID/events')
-  .get(requireAuth, async (req, res) => {
+  .get(async (req, res) => {
     try {
       // const { user } = req;
-      const result = await Events.getEvents();
+      const result = await Events.getEvents(req.params.userID);
+      console.log(result);
       // have a way for the user to add more optional fields
       res.json(result);
     } catch (error) {

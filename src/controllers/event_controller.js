@@ -1,4 +1,5 @@
 import Event from '../models/event_model';
+import User from '../models/user_model';
 
 export const createEvent = async (eventFields) => {
   // await creating a path
@@ -30,10 +31,11 @@ export const getEvent = async (id) => {
   }
 };
 
-export const getEvents = async () => {
+export const getEvents = async (id) => {
   try {
     // await finding one path
-    const events = await Event.find();
+    const user = await User.findById(id);
+    const events = await Event.find({ _id: { $in: user.events } });
     // return path
     return events;
   } catch (error) {
