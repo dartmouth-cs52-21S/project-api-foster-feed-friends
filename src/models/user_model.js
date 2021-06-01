@@ -13,7 +13,8 @@ const UserSchema = new Schema({
     ref: 'Mentor',
   }],
   orgname: { type: String },
-  path: { type: Schema.Types.ObjectId, ref: 'Path' },
+  path: { type: String },
+  // path: { type: Schema.Types.ObjectId, ref: 'Path' },
   pocname: { type: String },
   donationRoute: { type: String },
   purpose: { type: String },
@@ -27,6 +28,10 @@ const UserSchema = new Schema({
   foster: { type: String },
   careerPath: { type: String },
   type: { type: String },
+  momentsPath: [{
+    type: Object,
+    ref: 'momentsPath',
+  }],
 
 }, {
   toObject: { virtuals: true },
