@@ -26,6 +26,7 @@ const MentorSchema = new Schema({
   },
   timestamps: true,
 });
+
 MentorSchema.pre('save', async function beforeUserSave(next) {
   // get access to the user model
   const mentor = this;
