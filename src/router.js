@@ -4,6 +4,7 @@ import * as Users from './controllers/user_controller';
 // import * as Orgs from './controllers/organisation_controller';
 // import * as Mentors from './controllers/mentor_controller';
 import * as Events from './controllers/event_controller';
+import * as Resource from './controllers/resource_controler';
 import { requireAuth, requireSignin } from './services/passport';
 // import { requireAuthMentor, requireSigninMentor } from './services/passport_mentor';
 // import { requireSigninOrg, requireAuthOrg } from './services/passport_org';
@@ -254,6 +255,36 @@ router.route('/networks/all')
     }
   });
 
+router.route('/submitResource')
+  .post(async (req, res) => {
+    try {
+      console.log('we made it ');
+      console.log(req.body);
+      const result = await Resource.createResource(req.body);
+      res.json(result);
+    } catch (error) {
+      res.status(422).send({ error: error.toString() });
+    }
+  });
+
+router.route('/resources')
+  .get(async (req, res) => {
+    try {
+      const resource = await Resource.getResources();
+      res.json(resource);
+    } catch (error) {
+      res.status(500).send({ error: error.toString() });
+    }
+  });
+router.route('/resources/:resourceID')
+  .get(async (req, res) => {
+    try {
+      const resource = await Resource.getResource(req.params.resourceID);
+      res.json(resource);
+    } catch (error) {
+      res.status(500).send({ error: error.toString() });
+    }
+  });
 export default router;
 
 // curl -X GET "https://localhost:9090/api/mentor/60a91ad0b0d4feaa4d7297a7?"
