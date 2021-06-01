@@ -13,9 +13,11 @@ const router = Router();
 router.get('/', (req, res) => {
   res.json({ message: 'welcome to our blog api!' });
 });
+
 router.get('/test', (req, res) => {
   res.json({ message: 'welcome to our blog api yayayy!' });
 });
+
 // signup
 router.post('/signup/youth', async (req, res) => {
   try {
@@ -48,6 +50,7 @@ router.post('/signup/org', async (req, res) => {
     res.status(422).send({ error: error.toString() });
   }
 });
+
 router.post('/signin/org', requireSignin, async (req, res) => {
   try {
     const token = await Users.signin(req.user);
@@ -68,6 +71,7 @@ router.post('/signup/mentor', async (req, res) => {
     res.status(422).send({ error: error.toString() });
   }
 });
+
 router.post('/signin/mentor', requireSignin, async (req, res) => {
   try {
     const token = await Users.signin(req.user);
@@ -131,6 +135,7 @@ router.route('/youth/profile/:userID')
       res.status(500).json({ error });
     }
   });
+
 router.route('/org/profile/:userID/event')
   .post(requireAuth, async (req, res) => {
     try {
@@ -193,6 +198,7 @@ router.route('/org/:userID/event/:eventID')
       res.status(500).json({ error });
     }
   });
+
 // send header from frontend for reqAuth
 router.route('/youth/profile/:userID/edit')
   .put(requireAuth, async (req, res) => {
@@ -217,6 +223,7 @@ router.route('/org/profile/:userID/edit')
       res.status(500).json({ error });
     }
   });
+
 router.route('/networks/resources')
   .get(async (req, res) => {
     try {
@@ -226,6 +233,7 @@ router.route('/networks/resources')
       res.status(500).json({ error });
     }
   });
+
 router.route('/networks/mentors')
   .get(async (req, res) => {
     try {
@@ -235,6 +243,7 @@ router.route('/networks/mentors')
       res.status(500).json({ error });
     }
   });
+
 router.route('/networks/all')
   .get(async (req, res) => {
     try {
