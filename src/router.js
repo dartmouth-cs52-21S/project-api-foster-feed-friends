@@ -222,6 +222,21 @@ router.route('/org/:userID/event/:eventID')
     }
   });
 
+// just added this :))
+router.route('/org/:userID/event/:eventID')
+  .put(requireAuth, async (req, res) => {
+    try {
+      // const { user } = req;
+      // get a specific event
+      const event = await Events.getEvent(req.params.eventID);
+      const result = await Users.updateUser(req.params.userID, event);
+      // have a way for the user to add more optional fields
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+
 // send header from frontend for reqAuth
 router.route('/youth/profile/:userID/edit')
   .put(requireAuth, async (req, res) => {
