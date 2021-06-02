@@ -157,7 +157,6 @@ router.route('/org/profile/:userID/event')
       res.status(500).json({ error });
     }
   });
-  
 
 router.route('/addPath')
   .post(async (req, res) => {
@@ -185,6 +184,19 @@ router.route('/mentor/profile/:userID/edit')
   });
 
 router.route('/org/:userID/events')
+  .get(async (req, res) => {
+    try {
+      // const { user } = req;
+      const result = await Events.getEvents(req.params.userID);
+      console.log(result);
+      // have a way for the user to add more optional fields
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+
+router.route('/youth/:userID/events')
   .get(async (req, res) => {
     try {
       // const { user } = req;
