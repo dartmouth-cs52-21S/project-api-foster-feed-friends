@@ -229,7 +229,6 @@ router.route('/org/:userID/event/:eventID')
       // const { user } = req;
       // get a specific event
       // const event = await Events.getEvent(req.params.eventID);
-      console.log(req.body);
       const result = await Users.updateUser(req.params.userID, req.body);
       // have a way for the user to add more optional fields
       res.json(result);
