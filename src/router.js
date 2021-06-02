@@ -228,8 +228,8 @@ router.route('/org/:userID/event/:eventID')
     try {
       // const { user } = req;
       // get a specific event
-      const event = await Events.getEvent(req.params.eventID);
-      const result = await Users.updateUser(req.params.userID, event);
+      // const event = await Events.getEvent(req.params.eventID);
+      const result = await Users.updateUser(req.params.userID, req.body);
       // have a way for the user to add more optional fields
       res.json(result);
     } catch (error) {
