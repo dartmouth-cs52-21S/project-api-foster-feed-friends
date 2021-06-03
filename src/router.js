@@ -322,6 +322,17 @@ router.route('/resources/:resourceID')
       res.status(500).send({ error: error.toString() });
     }
   });
+router.route('/:userID/mentor')
+  .put(requireAuth, async (req, res) => {
+    try {
+      // const { user } = req;
+      const result = await Users.updateUser(req.params.userID, req.body);
+      // have a way for the user to add more optional fields
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
 export default router;
 
 // curl -X GET "https://localhost:9090/api/mentor/60a91ad0b0d4feaa4d7297a7?"
