@@ -107,7 +107,7 @@ router.route('/mentors')
   });
 
 router.route('/mentor/profile/:userID')
-  .get(requireAuth, async (req, res) => {
+  .get(async (req, res) => {
     try {
       const mentor = await Users.getUser(req.params.userID);
       res.json(mentor);
