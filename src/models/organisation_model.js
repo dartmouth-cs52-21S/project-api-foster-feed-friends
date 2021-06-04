@@ -20,6 +20,7 @@ const OrganisationSchema = new Schema({
   toJSON: { virtuals: true },
   timestamps: true,
 });
+
 OrganisationSchema.pre('save', async function beforeUserSave(next) {
   // get access to the user model
   const org = this;
