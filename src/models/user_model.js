@@ -8,6 +8,7 @@ const UserSchema = new Schema({
   lastName: { type: String },
   hometown: { type: String },
   age: { type: String },
+  name: { type: String },
   messaged: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Mentor',

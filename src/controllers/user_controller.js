@@ -50,6 +50,7 @@ export const signup = async (fields) => {
   user.type = fields.type;
   user.orgname = fields.orgname;
   user.momentsPath = fields.momentsPath;
+  user.name = fields.name;
   // this is similar to how you created a Post
   // and then save and return a token
   await user.save();
