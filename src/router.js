@@ -333,10 +333,10 @@ router.route('/youth/:userID/path/edit')
       res.status(500).json({ error });
     }
   });
-router.route('/mentor/:userID/path/edit')
+router.route('/:userID/mentor')
   .put(requireAuth, async (req, res) => {
     try {
-      console.log(req.body);
+      // const { user } = req;
       const result = await Users.updateUser(req.params.userID, req.body);
       // have a way for the user to add more optional fields
       res.json(result);
