@@ -220,7 +220,17 @@ router.route('/youth/:userID/messaged')
       res.status(500).json({ error });
     }
   });
-
+router.route('org/:userID/event/:eventID/add')
+  .put(requireAuth, async (req, res) => {
+    try {
+      // get a specific event
+      const result = await Users.updateUser(req.params.userID, req.body);
+      // have a way for the user to add more optional fields
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
 router.route('/org/:userID/event/:eventID')
   .get(requireAuth, async (req, res) => {
     try {
@@ -235,7 +245,7 @@ router.route('/org/:userID/event/:eventID')
     }
   });
 
-router.route('/org/:userID/event/:eventID')
+router.route('/org/:userID/event/:eventID/edit')
   .put(requireAuth, async (req, res) => {
     try {
       // const { user } = req;
