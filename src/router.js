@@ -235,7 +235,7 @@ router.route('/org/:userID/event/:eventID')
     }
   });
 
-router.route('/org/:userID/event/:eventID/edit')
+router.route('/org/:userID/event/:eventID')
   .put(requireAuth, async (req, res) => {
     try {
       // const { user } = req;
