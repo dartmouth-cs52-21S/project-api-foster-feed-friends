@@ -220,7 +220,7 @@ router.route('/youth/:userID/messaged')
       res.status(500).json({ error });
     }
   });
-router.route('org/:userID/event/:eventID/add')
+router.route('/org/:userID/event/:eventID/add')
   .put(requireAuth, async (req, res) => {
     try {
       // get a specific event
