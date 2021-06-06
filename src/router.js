@@ -123,7 +123,7 @@ router.route('/youths')
   });
 
 router.route('/mentor/profile/:userID')
-  .get(requireAuth, async (req, res) => {
+  .get(async (req, res) => {
     console.log('Auth here');
     try {
       const mentor = await Users.getUser(req.params.userID);
@@ -227,6 +227,34 @@ router.route('/org/:userID/event/:eventID')
       console.log('req', req.params.eventID);
       // get a specific event
       const result = await Events.getEvent(req.params.eventID);
+      // have a way for the user to add more optional fields
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+
+router.route('/org/:userID/event/:eventID/edit')
+  .put(requireAuth, async (req, res) => {
+    try {
+      // const { user } = req;
+      console.log('req', req.params.eventID);
+      // get a specific event
+      const result = await Events.updateEvent(req.params.eventID, req.body);
+      // have a way for the user to add more optional fields
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+
+router.route('/org/:userID/event/:eventID/delete')
+  .delete(requireAuth, async (req, res) => {
+    try {
+      // const { user } = req;
+      console.log('req', req.params.eventID);
+      // get a specific event
+      const result = await Events.removeEvent(req.params.eventID);
       // have a way for the user to add more optional fields
       res.json(result);
     } catch (error) {

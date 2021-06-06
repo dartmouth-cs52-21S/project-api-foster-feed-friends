@@ -42,3 +42,24 @@ export const getEvents = async (id) => {
     throw new Error(`get event error: ${error}`);
   }
 };
+
+export const updateEvent = async (id, fields) => {
+  try {
+    // await updating a post by id
+    const options = { new: true };
+    const event = await Event.findByIdAndUpdate(id, fields, options);
+    // return *updated* user object
+    return event;
+  } catch (error) {
+    throw new Error(`update error: ${error}`);
+  }
+};
+
+export const removeEvent = async (id) => {
+  try {
+    const event = await Event.findByIdAndRemove(id);
+    return event;
+  } catch (error) {
+    throw new Error(`update error: ${error}`);
+  }
+};
