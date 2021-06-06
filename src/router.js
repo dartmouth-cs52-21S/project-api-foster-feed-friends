@@ -14,15 +14,15 @@ const router = Router();
 router.get('/', (req, res) => {
   res.json({ message: 'welcome to our blog api!' });
 });
-
 router.get('/test', (req, res) => {
   res.json({ message: 'welcome to our blog api yayayy!' });
 });
-
 // signup
 router.post('/signup/youth', async (req, res) => {
+  console.log('hi from router');
   try {
     const result = await Users.signup(req.body);
+    console.log(req.body);
     // we could have a helper method inside frontend's signup
     // that takes in the path and token and displays the info for that user?
     // res.json({ result, email: req.body.email });
@@ -33,10 +33,13 @@ router.post('/signup/youth', async (req, res) => {
 });
 
 router.post('/signin/youth', requireSignin, async (req, res) => {
+  console.log('hi from youth sign in');
   try {
+    console.log(req.user);
     const token = await Users.signin(req.user);
     res.json({ token, ID: req.user.id });
   } catch (error) {
+    console.log('hii');
     res.status(422).send({ error: error.toString() });
   }
 });
@@ -46,12 +49,12 @@ router.post('/signup/org', async (req, res) => {
     const result = await Users.signup(req.body);
     // we could have a helper method inside frontend's signup
     // that takes in the path and token and displays the info for that user?
+    console.log(result);
     res.json(result);
   } catch (error) {
     res.status(422).send({ error: error.toString() });
   }
 });
-
 router.post('/signin/org', requireSignin, async (req, res) => {
   try {
     const token = await Users.signin(req.user);
@@ -62,6 +65,7 @@ router.post('/signin/org', requireSignin, async (req, res) => {
 });
 
 router.post('/signup/mentor', async (req, res) => {
+  console.log('hi from router');
   try {
     const result = await Users.signup(req.body);
     // we could have a helper method inside frontend's signup
@@ -72,8 +76,8 @@ router.post('/signup/mentor', async (req, res) => {
     res.status(422).send({ error: error.toString() });
   }
 });
-
 router.post('/signin/mentor', requireSignin, async (req, res) => {
+  console.log('hi from router');
   try {
     const token = await Users.signin(req.user);
     // we could have a helper method inside frontend's signup
@@ -88,6 +92,7 @@ router.route('/orgs')
   .get(async (req, res) => {
     try {
       const org = await Users.getOrganisations();
+      console.log(org);
       res.json(org);
     } catch (error) {
       res.status(500).json({ error });
@@ -106,8 +111,21 @@ router.route('/mentors')
     }
   });
 
-router.route('/mentor/profile/:userID')
+router.route('/youths')
   .get(async (req, res) => {
+    try {
+      const result = await Users.getYouths();
+      // we could have a helper method inside frontend's signup
+      // that takes in the path and token and displays the info for that user?
+      res.json(result);
+    } catch (error) {
+      res.status(422).send({ error: error.toString() });
+    }
+  });
+
+router.route('/mentor/profile/:userID')
+  .get(requireAuth, async (req, res) => {
+    console.log('Auth here');
     try {
       const mentor = await Users.getUser(req.params.userID);
       res.json(mentor);
@@ -119,38 +137,32 @@ router.route('/mentor/profile/:userID')
 router.route('/org/profile/:userID')
   .get(async (req, res) => {
     try {
+      console.log(req.params.userID);
       const org = await Users.getUser(req.params.userID);
       res.json(org);
     } catch (error) {
       res.status(500).json({ error });
     }
   });
-// router.route('/orgs/profile/:userID')
-// .get(requireAuth, async (req, res) => {
-//   try {
-//     const org = await Users.getUser(req.params.userID);
-//     res.json(org);
-//   } catch (error) {
-//     res.status(500).json({ error });
-//   }
-// });
+
 router.route('/youth/profile/:userID')
   .get(requireAuth, async (req, res) => {
     try {
       const user = await Users.getUser(req.params.userID);
       // have a way for the user to add more optional fields
+      console.log(user);
       res.json(user);
     } catch (error) {
       res.status(500).json({ error });
     }
   });
-
 router.route('/org/profile/:userID/event')
   .post(requireAuth, async (req, res) => {
     try {
       const event = await Events.createEvent(req.body);
       const events = await Users.getEvents(req.params.userID);
       events.push(event);
+      console.log(events);
       const org = await Users.updateUser(req.params.userID, { events });
       res.json(org);
     } catch (error) {
@@ -196,11 +208,11 @@ router.route('/org/:userID/events')
     }
   });
 
-router.route('/youth/:userID/events')
+router.route('/youth/:userID/messaged')
   .get(async (req, res) => {
     try {
       // const { user } = req;
-      const result = await Events.getEvents(req.params.userID);
+      const result = await Users.getMessagedMentors(req.params.userID);
       console.log(result);
       // have a way for the user to add more optional fields
       res.json(result);
@@ -213,23 +225,9 @@ router.route('/org/:userID/event/:eventID')
   .get(requireAuth, async (req, res) => {
     try {
       // const { user } = req;
+      console.log('req', req.params.eventID);
       // get a specific event
       const result = await Events.getEvent(req.params.eventID);
-      // have a way for the user to add more optional fields
-      res.json(result);
-    } catch (error) {
-      res.status(500).json({ error });
-    }
-  });
-
-// just added this :))
-router.route('/org/:userID/event/:eventID')
-  .put(requireAuth, async (req, res) => {
-    try {
-      // const { user } = req;
-      // get a specific event
-      // const event = await Events.getEvent(req.params.eventID);
-      const result = await Users.updateUser(req.params.userID, req.body);
       // have a way for the user to add more optional fields
       res.json(result);
     } catch (error) {
@@ -261,7 +259,6 @@ router.route('/org/profile/:userID/edit')
       res.status(500).json({ error });
     }
   });
-
 router.route('/networks/resources')
   .get(async (req, res) => {
     try {
@@ -271,7 +268,6 @@ router.route('/networks/resources')
       res.status(500).json({ error });
     }
   });
-
 router.route('/networks/mentors')
   .get(async (req, res) => {
     try {
@@ -281,7 +277,6 @@ router.route('/networks/mentors')
       res.status(500).json({ error });
     }
   });
-
 router.route('/networks/all')
   .get(async (req, res) => {
     try {

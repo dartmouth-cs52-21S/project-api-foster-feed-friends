@@ -127,6 +127,28 @@ export const getMentors = async () => {
   }
 };
 
+export const getYouths = async () => {
+  try {
+    const mentors = await User.find({ type: 'youth' });
+    return mentors;
+  } catch (error) {
+    throw new Error(`get orgs error: ${error}`);
+  }
+};
+
+export const getMessagedMentors = async (id) => {
+  try {
+    // await finding one path
+    const user = await User.findById(id);
+    console.log(user);
+    const mentors = await User.find({ _id: { $in: user.messaged } });
+    // return path
+    return mentors;
+  } catch (error) {
+    throw new Error(`get event error: ${error}`);
+  }
+};
+
 export const getAll = async () => {
   try {
     const mentors = await User.find({ type: 'mentor' });
