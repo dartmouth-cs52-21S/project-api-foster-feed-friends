@@ -336,11 +336,11 @@ router.route('/resources')
       res.status(500).send({ error: error.toString() });
     }
   });
-router.route('./youth/:userID/events')
+router.route('/youth/:userID/events')
   .get(requireAuth, async (req, res) => {
     try {
-      const resource = await Events.getEvents(req.params.userID);
-      res.json(resource);
+      const events = await Events.getEvents(req.params.userID);
+      res.json(events);
     } catch (error) {
       res.status(500).send({ error: error.toString() });
     }
