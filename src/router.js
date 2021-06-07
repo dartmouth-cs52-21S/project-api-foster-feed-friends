@@ -93,6 +93,17 @@ router.route('/mentors')
       res.status(422).send({ error: error.toString() });
     }
   });
+
+/* getting a particular mentor */
+router.route('/:userID/mentor')
+  .put(requireAuth, async (req, res) => {
+    try {
+      const result = await Users.updateUser(req.params.userID, req.body);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
 /* routes for profiles for youth, org and mentor */
 router.route('/mentor/profile/:userID')
   .get(async (req, res) => {
@@ -178,9 +189,7 @@ router.route('/org/profile/:userID/event')
 router.route('/org/:userID/event/:eventID/add')
   .put(requireAuth, async (req, res) => {
     try {
-      // get a specific event
       const result = await Users.updateUser(req.params.userID, req.body);
-      // have a way for the user to add more optional fields
       res.json(result);
     } catch (error) {
       res.status(500).json({ error });
@@ -222,16 +231,6 @@ router.route('/org/:userID/event/:eventID/delete')
       res.status(500).json({ error });
     }
   });
-router.route('/addPath')
-  .post(async (req, res) => {
-    try {
-      const result = await Paths.createPath(req.body);
-      res.json(result);
-    } catch (error) {
-      res.status(422).send({ error: error.toString() });
-    }
-  });
-
 router.route('/youth/:userID/messaged')
   .get(async (req, res) => {
     try {
@@ -300,6 +299,15 @@ router.route('/resources/:resourceID')
     }
   });
 /* routes for path */
+router.route('/addPath')
+  .post(async (req, res) => {
+    try {
+      const result = await Paths.createPath(req.body);
+      res.json(result);
+    } catch (error) {
+      res.status(422).send({ error: error.toString() });
+    }
+  });
 router.route('/youth/:userID/path/edit')
   .put(requireAuth, async (req, res) => {
     try {
@@ -318,13 +326,5 @@ router.route('/mentor/:userID/path/edit')
       res.status(500).json({ error });
     }
   });
-router.route('/:userID/mentor')
-  .put(requireAuth, async (req, res) => {
-    try {
-      const result = await Users.updateUser(req.params.userID, req.body);
-      res.json(result);
-    } catch (error) {
-      res.status(500).json({ error });
-    }
-  });
+
 export default router;

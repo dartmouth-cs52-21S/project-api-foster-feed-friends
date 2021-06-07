@@ -1,7 +1,7 @@
 import Resource from '../models/resource_model';
 
 export const createResource = async (resourceFields) => {
-  // await creating a path
+  // await creating a resource
   const Resources = new Resource();
   Resources.organizationName = resourceFields.organizationName;
   Resources.location = resourceFields.location;
@@ -10,10 +10,8 @@ export const createResource = async (resourceFields) => {
   Resources.website = resourceFields.website;
   // return path
   try {
-    // await creating a resource
-    console.log(Resources);
+    // await saving a resource
     const savedResource = await Resources.save();
-    console.log(savedResource);
     return savedResource;
   } catch (error) {
     throw new Error(`create resource error: ${error}`);
@@ -29,13 +27,12 @@ export const getResources = async () => {
     console.log(error);
     throw new Error(`get resource error: ${error}`);
   }
-  // return posts
 };
 export const getResource = async (id) => {
   try {
-    // await finding one path
+    // await finding one resource
     const resource = await Resource.findById(id).exec();
-    // return path
+    // return resource
     return resource;
   } catch (error) {
     throw new Error(`get resource error: ${error}`);
@@ -43,7 +40,7 @@ export const getResource = async (id) => {
 };
 export const deleteResource = async (id) => {
   try {
-    // await deleting a path
+    // await deleting a paths
     await Resource.findByIdAndDelete(id);
     // return confirmation
     return 'success';

@@ -62,7 +62,7 @@ export const signup = async (fields) => {
 
 export const updateUser = async (id, fields) => {
   try {
-    // await updating a post by id
+    // await updating a user by id
     const options = { new: true };
     const user = await User.findByIdAndUpdate(id, fields, options).populate('Path');
     // return *updated* user object
@@ -74,10 +74,9 @@ export const updateUser = async (id, fields) => {
 
 export const getUser = async (id) => {
   try {
-    // await finding one youth user
+    // await finding one user
     const user = await User.findById(id).exec();
-    console.log(user);
-    // return youth user
+    // return user
     return user;
   } catch (error) {
     throw new Error(`get youth error: ${error}`);
@@ -86,14 +85,13 @@ export const getUser = async (id) => {
 
 export const getUsers = async () => {
   try {
-    // await finding orgs
+    // await finding all users
     const orgs = await User.find({});
-    // return orgs
+    // return users
     return orgs;
   } catch (error) {
     throw new Error(`get orgs error: ${error}`);
   }
-  // return all organisations
 };
 
 export const getEvents = async (id) => {
@@ -120,7 +118,9 @@ export const getOrganisations = async () => {
 
 export const getMentors = async () => {
   try {
+    // get all users with type mentor
     const mentors = await User.find({ type: 'mentor' });
+    // return mentors
     return mentors;
   } catch (error) {
     throw new Error(`get orgs error: ${error}`);
@@ -129,8 +129,9 @@ export const getMentors = async () => {
 
 export const getYouths = async () => {
   try {
-    const mentors = await User.find({ type: 'youth' });
-    return mentors;
+    // get all youth users
+    const youths = await User.find({ type: 'youth' });
+    return youths;
   } catch (error) {
     throw new Error(`get orgs error: ${error}`);
   }
@@ -140,7 +141,6 @@ export const getMessagedMentors = async (id) => {
   try {
     // await finding one path
     const user = await User.findById(id);
-    console.log(user);
     const mentors = await User.find({ _id: { $in: user.messaged } });
     // return path
     return mentors;
@@ -151,8 +151,11 @@ export const getMessagedMentors = async (id) => {
 
 export const getAll = async () => {
   try {
+    // await getting all mentors
     const mentors = await User.find({ type: 'mentor' });
+    // await getting all orgs
     const orgs = await User.find({ type: 'org' });
+    // return both mentors and orgs
     return { mentors, orgs };
   } catch (error) {
     throw new Error(`get all error: ${error}`);

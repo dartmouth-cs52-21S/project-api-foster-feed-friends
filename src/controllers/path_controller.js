@@ -52,7 +52,7 @@ export const updatePath = async (id, pathFields) => {
     // await updating a post by id
     const options = { new: true };
     const path = await Path.findByIdAndUpdate(id, pathFields, options);
-    // return *updated* post
+    // return *updated* path
     return path;
   } catch (error) {
     throw new Error(`update error: ${error}`);
