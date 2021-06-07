@@ -7,10 +7,9 @@
 ## Architecture
 
 - mongodb
-  - User Collection with log in information (ie. Name, Username, Password, Email, Hometown/City, foster or organization, and path/purpose) 
+  - User Collection with log in information (ie. Name, Username, Password, Email, Hometown/City, foster or organization, path/purpose etc) 
   - Path Resources Colletion (e.g: College, Workforce, Military, Technical School/Bootcamps) 
-  - Mentors Collection (Name, Organization, Career Path, Email, Former Foster Youth, Bio: Why be a mentor?) 
-  - Organziations Collection (Name, donation route, purpose, location)
+  - events for organizations
 - passport for security
 - bycrypt for password encryption
 
