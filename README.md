@@ -2,7 +2,6 @@
 
 <img width="1440" alt="Screen Shot 2021-06-07 at 4 26 23 PM" src="https://user-images.githubusercontent.com/31497093/121083623-ab2c2a00-c7ad-11eb-9905-81c5337b29ff.png">
 
-TODO: short project description, some sample screenshots or mockups
 [mockups](https://www.figma.com/file/Hcpn03bH20z84UQfOMYEGj/?node-id=0%3A1) 
 
 ## Architecture
